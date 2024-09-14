@@ -18,9 +18,10 @@ while isEnd == False:
 
     courses_title = Selector(response=response).css('#filter-search > div.main-content-page > div > div.col-lg-9.col-md-8.col-sm-12.col-xs-12.courses-view > div.row > div > div > h2 > a::text').getall()
     courses_url = Selector(response=response).css('#filter-search > div.main-content-page > div > div.col-lg-9.col-md-8.col-sm-12.col-xs-12.courses-view > div.row > div > div > h2 > a').xpath('@href').getall()
-    courses_price = Selector(response=response).css('#filter-search > div.main-content-page > div > div.col-lg-9.col-md-8.col-sm-12.col-xs-12.courses-view > div.row > div:nth-child(1) > div > div.detail > div.bottom > span.price > i::text').getall()
+    courses_price = Selector(response=response).css('#filter-search > div.main-content-page > div > div.col-lg-9.col-md-8.col-sm-12.col-xs-12.courses-view > div.row > div > div > div.detail > div.bottom > span.price > i::text').getall()
 
     for index,course_price in enumerate(courses_price):
+
         if course_price.find('اعضای ویژه') > -1:
             continue
 
