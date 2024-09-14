@@ -5,7 +5,7 @@ from json import dumps
 URL = 'https://toplearn.com/courses?Search=&orderby=createAndUpdatedate&filterby=all'
 COURSES_INFORMATION = list()
 
-user_input = input('enter price: ')
+user_input = int(input('enter price: '))
 
 isEnd = False
 pageNumber = 1
