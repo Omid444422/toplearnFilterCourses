@@ -4,6 +4,7 @@ from json import dumps
 
 URL = 'https://toplearn.com/courses?Search=&orderby=createAndUpdatedate&filterby=all'
 COURSES_INFORMATION = list()
+FREE_COURSES_INFORMATION = list()
 
 user_input = int(input('enter price: '))
 
@@ -25,7 +26,20 @@ while isEnd == False:
         if course_price.find('اعضای ویژه') > -1:
             continue
 
-        if course_price.find('رایگان') > -1 or int(course_price.replace(',','')) <= user_input:
+        if course_price.find('رایگان') > -1:
+            course_title = courses_title[index]
+            course_url = courses_url[index]
+            
+            FREE_COURSES_INFORMATION.append({'title': course_title,'url' : 'https://toplearn.com' + course_url, 'price' : course_price})
+            counter += 1
+
+            print('name: ' + course_title + ' ' + course_price)
+            print(counter)
+
+            continue
+
+
+        if int(course_price.replace(',','')) <= user_input:
             course_title = courses_title[index]
             course_url = courses_url[index]
             
@@ -52,4 +66,16 @@ for course in COURSES_INFORMATION:
         txt_output_file.write(f"{course['title']} | price: {course['price']} \n")
         txt_output_file.write(f"url: {course['url']} \n")
         txt_output_file.write('='*100 + '\n')
+
+ 
+#free courses 
+with open('free.json','w',encoding='utf-8') as json_output_file:
+    json_output_file.write(dumps(FREE_COURSES_INFORMATION))
+
+
+for course in FREE_COURSES_INFORMATION:
+    with open('free.txt','a',encoding='utf-8') as txt_output_file:
+        txt_output_file.write(f"{course['title']} | price: {course['price']} \n")
+        txt_output_file.write(f"url: {course['url']} \n")
+        txt_output_file.write('='*100 + '\n')       
 
