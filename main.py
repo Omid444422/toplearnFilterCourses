@@ -8,6 +8,8 @@ FREE_COURSES_INFORMATION = list()
 
 user_input = int(input('enter price: '))
 
+firstItem = None
+
 isEnd = False
 pageNumber = 1
 counter = 0
@@ -20,6 +22,9 @@ while isEnd == False:
     courses_title = Selector(response=response).css('#filter-search > div.main-content-page > div > div.col-lg-9.col-md-8.col-sm-12.col-xs-12.courses-view > div.row > div > div > h2 > a::text').getall()
     courses_url = Selector(response=response).css('#filter-search > div.main-content-page > div > div.col-lg-9.col-md-8.col-sm-12.col-xs-12.courses-view > div.row > div > div > h2 > a').xpath('@href').getall()
     courses_price = Selector(response=response).css('#filter-search > div.main-content-page > div > div.col-lg-9.col-md-8.col-sm-12.col-xs-12.courses-view > div.row > div > div > div.detail > div.bottom > span.price > i::text').getall()
+
+    if pageNumber == 1:
+        firstItem = courses_title[0]
 
     for index,course_price in enumerate(courses_price):
 
@@ -50,11 +55,12 @@ while isEnd == False:
             print(counter)
 
             continue
+        
+    if pageNumber > 1 and firstItem == courses_title[0]:
+        isEnd = True
    
     pageNumber += 1
 
-    if len(courses_title) == 1:
-        isEnd = True
 
 
 with open('output.json','w',encoding='utf-8') as json_output_file:
